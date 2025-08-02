@@ -23,11 +23,8 @@ To perform basic image processing operations on an RGB image, including:
 | `Vignesh_RGBtoGray.m`   | Converts the RGB image to grayscale       |
 | `Vignesh_RGBPlanes.m`   | Extracts and displays R, G, B color planes|
 | `Vignesh_RGBtoBW.m`     | Converts the RGB image to black & white   |
-| `GrayScale_Image.jpg`   | Output grayscale image                    |
-| `RGBPlanes_Image.jpg`   | Output showing RGB planes                 |
-| `Black&White_Image.jpg` | Output image after binary conversion      |
+| `Output Images/`        | Folder containing resulting image outputs |
 
-> 💬 All files committed with: **"Added Practical-1"**
 
 ---
 
@@ -39,7 +36,7 @@ To perform basic image processing operations on an RGB image, including:
 
 | RGB Planes               | Black & White Image     |
 |--------------------------|-------------------------|
-| ![RGB Planes](./RGBPlanes_Image.jpg) | ![B&W](./Black&White_Image.jpg) |
+| ![RGB Planes](./Output Images//RGBPlanes_Image.jpg) | ![B&W](./Output Images//Black&White_Image.jpg) |
 
 ---
 
