@@ -30,13 +30,14 @@ To perform basic image processing operations on an RGB image, including:
 
 ## 🖼 Image Comparison
 
-| Original Image             | Grayscale Image           |
-|----------------------------|---------------------------|
-| ![Original](./Avengers.jpg) | ![Grayscale](../Output%20Images/GrayScale_Image.jpg) |
+| Original Image           | Grayscale Image           |
+|--------------------------|---------------------------|
+| ![Original](./Avengers.jpg) | ![Grayscale](./Output%20Images/GrayScale_Image.jpg) |
 
-| RGB Planes                 | Black & White Image       |
-|----------------------------|---------------------------|
-| ![RGB Planes](../Output%20Images/RGBPlanes_Image.jpg) | ![B&W](../Output%20Images/Black%26White_Image.jpg) |
+| RGB Planes               | Black & White Image       |
+|--------------------------|---------------------------|
+| ![RGB Planes](./Output%20Images/RGBPlanes_Image.jpg) | ![B&W](./Output%20Images/Black%26White_Image.jpg) |
+
 
 
 ---
