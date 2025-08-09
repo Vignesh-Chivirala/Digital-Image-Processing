@@ -30,18 +30,11 @@ To perform image enhancement and binary decomposition techniques on a grayscale 
 ## 🖼 Output Preview
 
 ### Histogram Equalization
-![Histogram Equalization Result](./Output_HistEqu.png)
+![Histogram Equalization Result](./Output_Images/Output_HistEqu.png)
 
 ---
 
 ### Bit Plane Slicing
-![Bit Plane Slicing Result](./Output_bitSlicing.png)
+![Bit Plane Slicing Result](./Output_Images/Output_bitSlicing.png)
 
 ---
-
-## 🚀 How to Run
-
-1. Make sure Python is installed.
-2. Install the required packages:
-   ```bash
-   pip install numpy opencv-python matplotlib
