@@ -2,30 +2,42 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Read the image in grayscale
-img = cv2.imread('Input_Image_Grayscale.jpg', cv2.IMREAD_GRAYSCALE)
+def vignesh_bitSlicing(image_path):
+    # Read image
+    img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
 
-# List to store bit planes
-bit_planes = []
+    # Convert to grayscale if RGB
+    if len(img.shape) == 3:
+        img = np.uint8(np.mean(img, axis=2))
 
-# Extract each bit plane
-for k in range(8):
-    # Shift right by k and mask with 1
-    bit_plane = np.bitwise_and(np.right_shift(img, k), 1) * 255
-    bit_planes.append(bit_plane)
+    # Get dimensions
+    rows, cols = img.shape
 
-# Display original and bit planes
-plt.figure(figsize=(10, 6))
-plt.subplot(3, 3, 1)
-plt.imshow(img, cmap='gray')
-plt.title('Original Image')
-plt.axis('off')
+    # Initialize bit planes
+    bit_planes = np.zeros((rows, cols, 8), dtype=np.uint8)
 
-for k in range(8):
-    plt.subplot(3, 3, k+2)
-    plt.imshow(bit_planes[k], cmap='gray')
-    plt.title(f'Bit Plane {k+1}')
-    plt.axis('off')
+    # Traverse each pixel
+    for i in range(rows):
+        for j in range(cols):
+            pixel_val = img[i, j]
 
-plt.tight_layout()
-plt.show()
+            # Convert to 8-bit binary string
+            binary_val = format(pixel_val, '08b')  # e.g., '00110111'
+
+            # Extract bits (MSB first)
+            for count in range(8):
+                binary_bit_value = int(binary_val[count])
+                bit_planes[i, j, count] = binary_bit_value
+
+    # Display bit planes (MSB → LSB)
+    plt.figure(figsize=(10, 6))
+    for k in range(8):
+        plt.subplot(2, 4, k+1)
+        plt.imshow(bit_planes[:, :, k], cmap='gray')
+        plt.title(f'Bit Plane {8-k}')  # Reverse numbering for MSB=8
+        plt.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+vignesh_bitSlicing("Input_Image_Grayscale.jpg")
