@@ -23,7 +23,7 @@ To perform image enhancement and binary decomposition techniques on a grayscale 
 | `vignesh_bitSlicing.py`     | Python implementation of Bit Plane Slicing             |
 | `Output_HistEqu.png`        | Output showing histogram equalization result           |
 | `Output_bitSlicing.png`     | Output showing all bit planes of the image             |
-| `Output Images/`            |Folder containing resulting image outputs               |
+| `Output_Images/`            |Folder containing resulting image outputs               |
 
 ---
 
