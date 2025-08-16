@@ -1,78 +1,68 @@
-#Count how many times each letter appears
-def count_letters(text):
-    counts = {}
-    for letter in text:
-        if letter in counts:
-            counts[letter] += 1
-        else:
-            counts[letter] = 1
-    return counts
+import heapq
 
-#Build the Huffman tree
-def build_huffman_tree(counts):
-    items = [[letter, count] for letter, count in counts.items()]
+class Node:
+    def __init__(self, symbol=None, prob=0, left=None, right=None):
+        self.symbol = symbol
+        self.prob = prob
+        self.left = left
+        self.right = right
 
-    while len(items) > 1:
-        # Sort by count (ascending)
-        items.sort(key=lambda x: x[1])
+    # Comparison operator for heapq
+    def __lt__(self, other):
+        return self.prob < other.prob
 
-        # Take two smallest items
-        first = items.pop(0)
-        second = items.pop(0)
 
-        # Make a new item as parent to first and second
-        combined = [[first, second], first[1] + second[1]]
-        items.append(combined)
+def build_huffman_tree(symbols, probabilities):
+    heap = [Node(symbol=s, prob=p) for s, p in zip(symbols, probabilities)]
+    heapq.heapify(heap)
 
-    return items[0]
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+        merged = Node(prob=left.prob + right.prob, left=left, right=right)
+        heapq.heappush(heap, merged)
 
-# Make codes for each letter by traversing the tree
-def make_letter_codes(tree, current_code='', code_book=None):
-    if code_book is None:
-        code_book = {}
+    return heap[0]  # root of the tree
 
-    # If current node is a single letter and not a group with children
-    if isinstance(tree[0], str):
-        code_book[tree[0]] = current_code
+
+def generate_codes(node, prefix='', code_dict=None):
+    if code_dict is None:
+        code_dict = {}
+
+    if node.symbol is not None:
+        code_dict[node.symbol] = prefix
     else:
-        # Go left (add '0') and right (add '1')
-        make_letter_codes(tree[0][0], current_code + '0', code_book)
-        make_letter_codes(tree[0][1], current_code + '1', code_book)
+        generate_codes(node.left, prefix + '0', code_dict)
+        generate_codes(node.right, prefix + '1', code_dict)
 
-    return code_book
+    return code_dict
 
-#Convert the message
-def encode_text(text, code_book):
-    result = ''
-    for letter in text:
-        result += code_book[letter]
-    return result
 
-#Main
-text = input("Enter your message: ")
-letter_counts = count_letters(text)
-if len(letter_counts) <= 1:
-    print("Input message must contain at least two different letters.")
-else:    
-    tree = build_huffman_tree(letter_counts)
-    codes = make_letter_codes(tree)
-    encoded_text = encode_text(text, codes)
-    #Print Output
-    print("Letter Codes:")
-    for letter in codes:
-        print(f"{letter}=>{codes[letter]}")
+def huffman_coding(symbols, probabilities):
+    root = build_huffman_tree(symbols, probabilities)
+    code_dict = generate_codes(root)
 
-    print("\nOriginal Text=>")
-    print(text)
+    # Calculate average code length
+    avg_length = sum(probabilities[i] * len(code_dict[symbols[i]]) for i in range(len(symbols)))
+    return code_dict, avg_length
 
-    print("\nEncoded Text=>")
-    print(encoded_text)
 
-#Compression Efficiency
-original_bits = len(text) * 8
-compressed_bits = len(encoded_text)
-compression_ratio = original_bits / compressed_bits
+# === Example Usage ===
+if __name__ == "__main__":
+    # Example: 5 symbols with probabilities
+    symbols = ['A', 'B', 'C', 'D']
+    probabilities = [0.4, 0.3, 0.2, 0.1]
 
-print(f"\nOriginal Size: {original_bits} bits")
-print(f"Compressed Size: {compressed_bits} bits")
-print(f"Compression Ratio: {compression_ratio:.2f}:1")
+    # Ensure probabilities sum to 1
+    if abs(sum(probabilities) - 1.0) > 1e-6:
+        raise ValueError("Probabilities must sum to 1.")
+
+    # Huffman coding
+    codes, avg_length = huffman_coding(symbols, probabilities)
+
+    # Display result
+    print("Symbol\tProbability\tCode")
+    for s in symbols:
+        print(f"{s}\t{probabilities[symbols.index(s)]:.2f}\t\t{codes[s]}")
+
+    print(f"\nAverage Codeword Length: {avg_length:.4f} bits/symbol")
