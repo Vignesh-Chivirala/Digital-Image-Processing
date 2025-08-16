@@ -26,8 +26,8 @@ Both techniques are implemented in Python and demonstrate how to assign variable
 Results generated during execution of the scripts:
 
 
-| Huffman Output | Shannon-Fano Output |
-|----------------|---------------------|
+| Huffman Output                                   | Shannon-Fano Output                                    |
+|--------------------------------------------------|--------------------------------------------------------|
 | ![Huffman](./Output%20Images/Output_Huffman.png) | ![Shannon](./Output%20Images/Output_shannonCoding.png) |
 
 
