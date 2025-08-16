@@ -27,11 +27,11 @@ Visual results generated during execution of the scripts:
 
 #### ✅ Huffman Coding Output
 
-![Huffman Output](Output%20Images/huffman_output.png)
+![Huffman Output](./OutputImages/huffman_output.png)
 
 #### ✅ Shannon-Fano Coding Output
 
-![Shannon-Fano Output](Output%20Images/shannon_output.png)
+![Shannon-Fano Output](./OutputImages/shannon_output.png)
 
 
 
