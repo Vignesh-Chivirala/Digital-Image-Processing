@@ -17,6 +17,7 @@ Each lab practical is organized in its own folder and typically includes:
 |-----|-----------------------------------------------------|
 | 1   | RGB to Grayscale, RGB Channels, RGB to BLack & White|
 | 2   | Bit Slicing, Histogram Equalization                 |
+| 3   | Huffman Coding and Shannon-Fano Coding              |
 
 ---
 
