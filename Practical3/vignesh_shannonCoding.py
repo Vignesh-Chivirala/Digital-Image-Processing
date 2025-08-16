@@ -1,71 +1,71 @@
-#Count each character appearance
-def count_frequencies(message):
-    frequency = {}
-    for char in message:
-        if char in frequency:
-            frequency[char] += 1
+def shannon_fano(probabilities):
+    # Normalize probabilities just in case
+    total = sum(probabilities)
+    if total == 0:
+        raise ValueError("Sum of probabilities cannot be zero.")
+    probabilities = [p / total for p in probabilities]
+
+    def recursive_sf(p_list):
+        if len(p_list) == 1:
+            return ['0']
+        elif len(p_list) == 2:
+            return ['0', '1']
+
+        # Sort in descending order and track original indices
+        sorted_p = sorted(enumerate(p_list), key=lambda x: x[1], reverse=True)
+        indices, p_sorted = zip(*sorted_p)
+
+        # Find best place to split
+        cumulative = [2 * sum(p_sorted[:i + 1]) - 1 for i in range(len(p_sorted))]
+        split_index = min(range(len(cumulative)), key=lambda i: abs(cumulative[i]))
+
+        if 0 < split_index < len(p_sorted) - 1:
+            left = p_sorted[:split_index + 1]
+            right = p_sorted[split_index + 1:]
+            left_codes = recursive_sf(left)
+            right_codes = recursive_sf(right)
+            new_codes = ['0' + code for code in left_codes] + ['1' + code for code in right_codes]
+        elif split_index == 0:
+            left = [p_sorted[0]]
+            right = p_sorted[1:]
+            left_codes = recursive_sf(left)
+            right_codes = recursive_sf(right)
+            new_codes = left_codes + ['1' + code for code in right_codes]
         else:
-            frequency[char] = 1
-    return frequency
+            left = p_sorted[:-1]
+            right = [p_sorted[-1]]
+            left_codes = recursive_sf(left)
+            right_codes = recursive_sf(right)
+            new_codes = ['1' + code for code in left_codes] + right_codes
 
-#Create codes
-def create_codes(frequency):
-    #Sort characters by frequency (descending)
-    sorted_chars = sorted(frequency.items(), key=lambda item: item[1], reverse=True)
+        # Reconstruct full code list in original order
+        full_codes = [''] * len(p_list)
+        for idx, code in zip(indices, new_codes):
+            full_codes[idx] = code
+        return full_codes
 
-    #Dictionary to store codes, initializing no code for every character
-    codes = {char: '' for char, x in sorted_chars}
+    # Generate the codewords
+    codewords = recursive_sf(probabilities)
 
-    def assign_codes(char_list):
-        if len(char_list) <= 1:
-            return
+    # Compute the average codeword length
+    average_length = sum(len(codewords[i]) * probabilities[i] for i in range(len(probabilities)))
+    return codewords, average_length
 
-        # Split the list into two halves
-        mid = len(char_list) // 2
-        left = char_list[:mid]
-        right = char_list[mid:]
+if __name__ == "__main__":
+    # Example: 5 symbols with given probabilities
+    symbols = ['A', 'B', 'C', 'D', 'E']
+    probabilities = [0.4, 0.2, 0.2, 0.1, 0.1]
 
-        # Add '0' to left group codes
-        for char, x in left:
-            codes[char] += '0'
-        # Add '1' to right group codes
-        for char, x in right:
-            codes[char] += '1'
+    # Ensure probabilities sum to 1
+    if abs(sum(probabilities) - 1.0) > 1e-6:
+        raise ValueError("Probabilities must sum to 1.")
 
-        # Repeat
-        assign_codes(left)
-        assign_codes(right)
+    # Get codes and average length
+    codewords, avg_length = shannon_fano(probabilities)
 
-    assign_codes(sorted_chars)
-    return codes
+    # Display result
+    print("Symbol\tProbability\tCode")
+    for symbol, prob, code in zip(symbols, probabilities, codewords):
+        print(f"{symbol}\t{prob:.2f}\t\t{code}")
 
-#Convert the message in codes
-def encode_message(message, codes):
-    encoded = ''
-    for char in message:
-        encoded += codes[char]
-    return encoded
-
-#Main
-message = input("Enter your message: ")
-frequencies = count_frequencies(message)
-codes = create_codes(frequencies)
-encoded_message = encode_message(message, codes)
-
-#Show coded message
-print("Character Codes:")
-for char in codes:
-    print(f"'{char}': {codes[char]}")
-
-print(f"\nOriginal Message=>{message}")
-print(f"\nEncoded Message=>{encoded_message}")
-
-
-#Compression Efficiency
-original_bits = len(message) * 8
-compressed_bits = len(encoded_message)
-compression_ratio = original_bits / compressed_bits
-
-print(f"\nOriginal Size: {original_bits} bits")
-print(f"Compressed Size: {compressed_bits} bits")
-print(f"Compression Ratio: {compression_ratio:.2f}:1")
+    print(f"\nAverage Codeword Length: {avg_length:.4f} bits/symbol")
