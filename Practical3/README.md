@@ -23,16 +23,12 @@ Both techniques are implemented in Python and demonstrate how to assign variable
 
 ### 🖼️ Output Images
 
-Visual results generated during execution of the scripts:
+Results generated during execution of the scripts:
 
-#### ✅ Huffman Coding Output
 
-![Huffman Output](./Output%20Images/Output_Huffman.png)
-
-#### ✅ Shannon-Fano Coding Output
-
-![Shannon-Fano Output](./Output%20Images/Output_shannonCoding.png)
-
+| Huffman Output | Shannon-Fano Output |
+|----------------|---------------------|
+| ![Huffman](./Output%20Images/Output_Huffman.png) | ![Shannon](./Output%20Images/Output_shannonCoding.png) |
 
 
 ### 📚 Concepts Covered
