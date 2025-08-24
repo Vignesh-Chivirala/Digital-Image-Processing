@@ -17,7 +17,7 @@ Both techniques are implemented in Python and demonstrate how images can be comp
 | `vignesh_img_compression_jpeg.py` | JPEG compression using **DCT, Quantization, and Inverse DCT** with visualization |
 | `vignesh_ArithmeticCoding.py`     | Arithmetic Coding implementation with encoding/decoding example           |
 | `Sample_Input_lena.jpg`           | Sample input image used for testing JPEG compression                      |
-| `/Output Images/`                 | Folder containing **compressed/reconstructed images**                     |
+| `/Output Images`                 | Folder containing **compressed/reconstructed images**                     |
 
 ---
 
