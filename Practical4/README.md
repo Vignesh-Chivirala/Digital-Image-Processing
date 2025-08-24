@@ -28,7 +28,7 @@ Results generated during execution of the scripts:
 
 | JPEG Compression Output                                   | Arithmetic Coding Output                                    |
 |-----------------------------------------------------------|------------------------------------------------------------|
-| ![JPEG](./Output%20Images/Output_JPEG.png)                | ![Arithmetic](./Output%20Images/Output_Arithmetic.png)     |
+| ![JPEG](./Output%20Images/Output_jpeg.png)                | ![Arithmetic](./Output%20Images/Output_Arithmetic.png)     |
 
 ---
 
